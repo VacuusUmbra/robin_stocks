@@ -1,5 +1,5 @@
 from csv import writer
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 import robin_stocks.helper as helper
 import robin_stocks.orders as orders
@@ -190,6 +190,63 @@ def export_all_option_orders(dir_path, file_name=None):
             'processed_quantity'
         ])
         for order in all_orders:
+                for leg in order['legs']:
+                    instrument_data = helper.request_get(leg['option'])
+                    csv_writer.writerow([
+                        order['chain_symbol'],
+                        instrument_data['expiration_date'],
+                        instrument_data['strike_price'],
+                        instrument_data['type'],
+                        leg['side'],
+                        order['created_at'],
+                        order['direction'],
+                        order['quantity'],
+                        order['type'],
+                        order['opening_strategy'],
+                        order['closing_strategy'],
+                        order['price'],
+                        order['processed_quantity']
+                    ])
+        f.close()
+
+@helper.login_required
+def export_option_orders_date_range(dir_path, file_name=None, start_date, end_date):
+    """Write all of the option orders within a date range to a csv
+
+        :param dir_path: Absolute or relative path to the directory the file will be written.
+        :type dir_path: str
+        :param file_name: An optional argument for the name of the file. If not defined, filename will be option_orders_{current date}
+        :type file_name: Optional[str]
+        :param start_date: The start of the date range in format 2020-12-21
+        :type start_date: str
+        :param end_date: The end of the date range in format 2020-12-21
+        :type end_date: str
+
+    """
+    file_path = create_absolute_csv(dir_path, file_name, 'option')
+    all_orders = orders.get_all_option_orders()
+    with open(file_path, 'w', newline='') as f:
+        csv_writer = writer(f)
+        csv_writer.writerow([
+            'chain_symbol',
+            'expiration_date',
+            'strike_price',
+            'option_type',
+            'side',
+            'order_created_at',
+            'direction',
+            'order_quantity',
+            'order_type',
+            'opening_strategy',
+            'closing_strategy',
+            'price',
+            'processed_quantity'
+        ])
+        for order in all_orders:
+            orderDate = datetime.datetime.strptime(order['created_at'][:10], "%Y-%m-%d")
+            start = datetime.datetime.strptime(start_date, "%Y-%m-%d")
+            end = datetime.datetime.strptime(end_date, "%Y-%m-%d")
+            if start <= orderDate <= end:
                 for leg in order['legs']:
                     instrument_data = helper.request_get(leg['option'])
                     csv_writer.writerow([

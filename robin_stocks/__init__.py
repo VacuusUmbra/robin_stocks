@@ -43,7 +43,8 @@ from .crypto import load_crypto_profile,        \
 from .export import export_completed_stock_orders,    \
                     export_all_stock_orders,          \
                     export_completed_option_orders,   \
-                    export_all_option_orders
+                    export_all_option_orders,         \
+                    export_option_orders_date_range
 
 from .helper import request_get,      \
                     request_post,     \

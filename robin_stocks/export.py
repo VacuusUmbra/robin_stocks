@@ -265,3 +265,9 @@ def export_option_orders_date_range(dir_path, file_name=None, start_date, end_da
                         order['processed_quantity']
                     ])
         f.close()
+
+@helper.login_required
+def export_todays_option_orders(dir_path, file_name=None):
+    today = date.today().strftime("%Y-%m-%d")
+    yesterday = (today - timedelta(days = 1)).strftime("%Y-%m-%d")
+    self.export_option_orders_date_range(dir_path, file_name=None, today, yesterday)

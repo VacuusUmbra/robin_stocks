@@ -159,3 +159,52 @@ def export_completed_option_orders(dir_path, file_name=None):
                         order['processed_quantity']
                     ])
         f.close()
+
+@helper.login_required
+def export_all_option_orders(dir_path, file_name=None):
+    """Write all option orders to a csv
+
+        :param dir_path: Absolute or relative path to the directory the file will be written.
+        :type dir_path: str
+        :param file_name: An optional argument for the name of the file. If not defined, filename will be option_orders_{current date}
+        :type file_name: Optional[str]
+
+    """
+    file_path = create_absolute_csv(dir_path, file_name, 'option')
+    all_orders = orders.get_all_option_orders()
+    with open(file_path, 'w', newline='') as f:
+        csv_writer = writer(f)
+        csv_writer.writerow([
+            'chain_symbol',
+            'expiration_date',
+            'strike_price',
+            'option_type',
+            'side',
+            'order_created_at',
+            'direction',
+            'order_quantity',
+            'order_type',
+            'opening_strategy',
+            'closing_strategy',
+            'price',
+            'processed_quantity'
+        ])
+        for order in all_orders:
+                for leg in order['legs']:
+                    instrument_data = helper.request_get(leg['option'])
+                    csv_writer.writerow([
+                        order['chain_symbol'],
+                        instrument_data['expiration_date'],
+                        instrument_data['strike_price'],
+                        instrument_data['type'],
+                        leg['side'],
+                        order['created_at'],
+                        order['direction'],
+                        order['quantity'],
+                        order['type'],
+                        order['opening_strategy'],
+                        order['closing_strategy'],
+                        order['price'],
+                        order['processed_quantity']
+                    ])
+        f.close()

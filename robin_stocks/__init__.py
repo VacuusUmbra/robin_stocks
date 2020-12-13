@@ -40,7 +40,8 @@ from .crypto import load_crypto_profile,        \
                     get_crypto_positions,       \
                     get_crypto_historicals
 
-from .export import export_completed_stock_orders, \
+from .export import export_completed_stock_orders,    \
+                    export_all_stock_orders,          \
                     export_completed_option_orders
 
 from .helper import request_get,      \

@@ -75,6 +75,40 @@ def export_completed_stock_orders(dir_path, file_name=None):
                 ])
         f.close()
 
+@helper.login_required
+def export_all_stock_orders(dir_path, file_name=None):
+    """Write all completed orders to a csv file
+
+    :param dir_path: Absolute or relative path to the directory the file will be written.
+    :type dir_path: str
+    :param file_name: An optional argument for the name of the file. If not defined, filename will be stock_orders_{current date}
+    :type file_name: Optional[str]
+
+    """
+    file_path = create_absolute_csv(dir_path, file_name, 'stock')
+    all_orders = orders.get_all_stock_orders()
+    with open(file_path, 'w', newline='') as f:
+        csv_writer = writer(f)
+        csv_writer.writerow([
+            'symbol',
+            'date',
+            'order_type',
+            'side',
+            'fees',
+            'quantity',
+            'average_price'
+        ])
+        for order in all_orders:
+            csv_writer.writerow([
+                stocks.get_symbol_by_url(order['instrument']),
+                order['last_transaction_at'],
+                order['type'],
+                order['side'],
+                order['fees'],
+                order['quantity'],
+                order['average_price']
+            ])
+        f.close()
 
 @helper.login_required
 def export_completed_option_orders(dir_path, file_name=None):

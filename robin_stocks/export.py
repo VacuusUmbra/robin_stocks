@@ -210,7 +210,7 @@ def export_all_option_orders(dir_path, file_name=None):
         f.close()
 
 @helper.login_required
-def export_option_orders_date_range(dir_path, file_name=None, start_date, end_date):
+def export_option_orders_date_range(dir_path, start_date, end_date, file_name=None):
     """Write all of the option orders within a date range to a csv
 
         :param dir_path: Absolute or relative path to the directory the file will be written.
@@ -270,4 +270,4 @@ def export_option_orders_date_range(dir_path, file_name=None, start_date, end_da
 def export_todays_option_orders(dir_path, file_name=None):
     today = date.today().strftime("%Y-%m-%d")
     yesterday = (today - timedelta(days = 1)).strftime("%Y-%m-%d")
-    self.export_option_orders_date_range(dir_path, file_name=None, today, yesterday)
+    self.export_option_orders_date_range(dir_path, today, yesterday, file_name)

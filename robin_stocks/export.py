@@ -243,9 +243,9 @@ def export_option_orders_date_range(dir_path, start_date, end_date, file_name=No
             'processed_quantity'
         ])
         for order in all_orders:
-            orderDate = datetime.datetime.strptime(order['created_at'][:10], "%Y-%m-%d")
-            start = datetime.datetime.strptime(start_date, "%Y-%m-%d")
-            end = datetime.datetime.strptime(end_date, "%Y-%m-%d")
+            orderDate = datetime.strptime(order['created_at'][:10], "%Y-%m-%d")
+            start = datetime.strptime(start_date, "%Y-%m-%d")
+            end = datetime.strptime(end_date, "%Y-%m-%d")
             if start <= orderDate <= end:
                 for leg in order['legs']:
                     instrument_data = helper.request_get(leg['option'])

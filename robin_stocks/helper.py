@@ -317,7 +317,7 @@ def request_get(url, dataType='regular', payload=None, jsonify_data=True, page_l
                 return(data)
             print('Loading page '+str(counter)+' ...', file=get_output())
             counter += 1
-            if counter > page_limit
+            if counter > page_limit:
                 return(data)
             for item in nextData['results']:
                 data.append(item)

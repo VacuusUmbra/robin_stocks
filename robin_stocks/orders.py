@@ -1,5 +1,6 @@
 """Contains all functions for placing orders for stocks, options, and crypto."""
 from uuid import uuid4
+import sys
 
 import robin_stocks.crypto as crypto
 import robin_stocks.helper as helper
@@ -23,7 +24,7 @@ def get_all_stock_orders(info=None):
 
 
 @helper.login_required
-def get_all_option_orders(info=None):
+def get_all_option_orders(page_limit=sys.maxsize, info=None):
     """Returns a list of all the option orders that have been processed for the account.
 
     :param info: Will filter the results to get a specific value.
@@ -33,7 +34,7 @@ def get_all_option_orders(info=None):
 
     """
     url = urls.option_orders()
-    data = helper.request_get(url, 'pagination')
+    data = helper.request_get(url, 'pagination', None, True, page_limit)
     return(helper.filter(data, info))
 
 

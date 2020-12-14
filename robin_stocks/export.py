@@ -1,5 +1,6 @@
 from csv import writer
 from datetime import date, timedelta, datetime
+import sys
 from pathlib import Path
 import robin_stocks.helper as helper
 import robin_stocks.orders as orders
@@ -111,7 +112,7 @@ def export_all_stock_orders(dir_path, file_name=None):
         f.close()
 
 @helper.login_required
-def export_completed_option_orders(dir_path, file_name=None):
+def export_completed_option_orders(dir_path, file_name=None, page_limit=sys.maxsize):
     """Write all completed option orders to a csv
 
         :param dir_path: Absolute or relative path to the directory the file will be written.
@@ -121,7 +122,7 @@ def export_completed_option_orders(dir_path, file_name=None):
 
     """
     file_path = create_absolute_csv(dir_path, file_name, 'option')
-    all_orders = orders.get_all_option_orders()
+    all_orders = orders.get_all_option_orders(page_limit)
     with open(file_path, 'w', newline='') as f:
         csv_writer = writer(f)
         csv_writer.writerow([
@@ -161,7 +162,7 @@ def export_completed_option_orders(dir_path, file_name=None):
         f.close()
 
 @helper.login_required
-def export_all_option_orders(dir_path, file_name=None):
+def export_all_option_orders(dir_path, file_name=None, page_limit=sys.maxsize):
     """Write all option orders to a csv
 
         :param dir_path: Absolute or relative path to the directory the file will be written.
@@ -171,7 +172,7 @@ def export_all_option_orders(dir_path, file_name=None):
 
     """
     file_path = create_absolute_csv(dir_path, file_name, 'option')
-    all_orders = orders.get_all_option_orders()
+    all_orders = orders.get_all_option_orders(page_limit)
     with open(file_path, 'w', newline='') as f:
         csv_writer = writer(f)
         csv_writer.writerow([
@@ -210,7 +211,7 @@ def export_all_option_orders(dir_path, file_name=None):
         f.close()
 
 @helper.login_required
-def export_option_orders_date_range(dir_path, start_date, end_date, file_name=None):
+def export_option_orders_date_range(dir_path, start_date, end_date, file_name=None, page_limit=sys.maxsize):
     """Write all of the option orders within a date range to a csv
 
         :param dir_path: Absolute or relative path to the directory the file will be written.
@@ -224,7 +225,7 @@ def export_option_orders_date_range(dir_path, start_date, end_date, file_name=No
 
     """
     file_path = create_absolute_csv(dir_path, file_name, 'option')
-    all_orders = orders.get_all_option_orders()
+    all_orders = orders.get_all_option_orders(page_limit)
     with open(file_path, 'w', newline='') as f:
         csv_writer = writer(f)
         csv_writer.writerow([
@@ -270,4 +271,4 @@ def export_option_orders_date_range(dir_path, start_date, end_date, file_name=No
 def export_todays_option_orders(dir_path, file_name=None):
     today = date.today().strftime("%Y-%m-%d")
     yesterday = (today - timedelta(days = 1)).strftime("%Y-%m-%d")
-    self.export_option_orders_date_range(dir_path, today, yesterday, file_name)
+    self.export_option_orders_date_range(dir_path, today, yesterday, file_name,100)

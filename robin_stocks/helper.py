@@ -9,6 +9,7 @@ Functions
 """
 from functools import wraps
 
+import sys
 import requests
 from robin_stocks.globals import LOGGED_IN, SESSION, OUTPUT
 
@@ -255,7 +256,7 @@ def request_document(url, payload=None):
     return(res)
 
 
-def request_get(url, dataType='regular', payload=None, jsonify_data=True):
+def request_get(url, dataType='regular', payload=None, jsonify_data=True, page_limit=sys.maxsize):
     """For a given url and payload, makes a get request and returns the data.
 
     :param url: The url to send a get request to.
@@ -316,6 +317,8 @@ def request_get(url, dataType='regular', payload=None, jsonify_data=True):
                 return(data)
             print('Loading page '+str(counter)+' ...', file=get_output())
             counter += 1
+            if counter > page_limit
+                return(data)
             for item in nextData['results']:
                 data.append(item)
     elif (dataType == 'indexzero'):

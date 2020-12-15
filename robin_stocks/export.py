@@ -285,12 +285,12 @@ def get_option_orders_date_range(start_date, end_date, page_limit=sys.maxsize):
     """
     order_list = []
     all_orders = orders.get_all_option_orders(page_limit)
-        for order in all_orders:
-            orderDate = datetime.strptime(order['created_at'][:10], "%Y-%m-%d")
-            start = datetime.strptime(str(start_date), "%Y-%m-%d")
-            end = datetime.strptime(str(end_date), "%Y-%m-%d")
-            if start <= orderDate <= end:
-                order_list.append(order)
+    for order in all_orders:
+        orderDate = datetime.strptime(order['created_at'][:10], "%Y-%m-%d")
+        start = datetime.strptime(str(start_date), "%Y-%m-%d")
+        end = datetime.strptime(str(end_date), "%Y-%m-%d")
+        if start <= orderDate <= end:
+            order_list.append(order)
     return order_list
 
 @helper.login_required

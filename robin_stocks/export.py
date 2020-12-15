@@ -269,9 +269,8 @@ def export_option_orders_date_range(dir_path, start_date, end_date, file_name=No
 
 @helper.login_required
 def export_todays_option_orders(dir_path, file_name=None):
-    today = datetime.today()
-    yesterday = (today - timedelta(days = 1)).strftime("%Y-%m-%d")
-    export_option_orders_date_range(dir_path, yesterday, today.strftime("%Y-%m-%d"), file_name,10)
+    today = datetime.today().strftime("%Y-%m-%d")
+    export_option_orders_date_range(dir_path, today, today, file_name,10)
 
 @helper.login_required
 def get_option_orders_date_range(start_date, end_date, page_limit=sys.maxsize):
@@ -295,7 +294,6 @@ def get_option_orders_date_range(start_date, end_date, page_limit=sys.maxsize):
 
 @helper.login_required
 def get_todays_option_orders():
-    today = datetime.today()
-    yesterday = (today - timedelta(days = 1)).strftime("%Y-%m-%d")
-    return get_option_orders_date_range(yesterday, today.strftime("%Y-%m-%d"), 10)
+    today = datetime.today().strftime("%Y-%m-%d")
+    return get_option_orders_date_range(today, today, 10)
     

@@ -272,7 +272,7 @@ def export_todays_option_orders(dir_path, file_name=None):
     today = datetime.today()
     yesterday = (today - timedelta(days = 1)).strftime("%Y-%m-%d")
     export_option_orders_date_range(dir_path, yesterday, today.strftime("%Y-%m-%d"), file_name,10)
-    
+
 @helper.login_required
 def get_option_orders_date_range(start_date, end_date, page_limit=sys.maxsize):
     """Get all of the option orders within a date range in an array
@@ -292,3 +292,10 @@ def get_option_orders_date_range(start_date, end_date, page_limit=sys.maxsize):
             if start <= orderDate <= end:
                 order_list.append(order)
     return order_list
+
+@helper.login_required
+def get_todays_option_orders():
+    today = datetime.today()
+    yesterday = (today - timedelta(days = 1)).strftime("%Y-%m-%d")
+    get_option_orders_date_range(yesterday, today.strftime("%Y-%m-%d"), 10)
+    

@@ -297,5 +297,5 @@ def get_option_orders_date_range(start_date, end_date, page_limit=sys.maxsize):
 def get_todays_option_orders():
     today = datetime.today()
     yesterday = (today - timedelta(days = 1)).strftime("%Y-%m-%d")
-    get_option_orders_date_range(yesterday, today.strftime("%Y-%m-%d"), 10)
+    return get_option_orders_date_range(yesterday, today.strftime("%Y-%m-%d"), 10)
     

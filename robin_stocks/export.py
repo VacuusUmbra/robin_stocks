@@ -271,4 +271,4 @@ def export_option_orders_date_range(dir_path, start_date, end_date, file_name=No
 def export_todays_option_orders(dir_path, file_name=None):
     today = datetime.today()
     yesterday = (today - timedelta(days = 1)).strftime("%Y-%m-%d")
-    export_option_orders_date_range(dir_path, today.strftime("%Y-%m-%d"), yesterday, file_name,20)
+    export_option_orders_date_range(dir_path, yesterday, today.strftime("%Y-%m-%d"), file_name,10)

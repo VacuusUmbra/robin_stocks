@@ -106,9 +106,9 @@ def login(username=None, password=None, expiresIn=86400, scope='internal', by_sm
         payload['mfa_code'] = mfa_code
 
     # If authentication has been stored in pickle file then load it. Stops login server from being pinged so much.
-    if os.path.isfile(pickle_path):
+    #if os.path.isfile(pickle_path):
         # If store_session has been set to false then delete the pickle file, otherwise try to load it.
-        # Loading pickle file will fail if the acess_token has expired.
+        # Loading pickle file will fail if the access_token has expired.
         if store_session:
             try:
                 with open(pickle_path, 'rb') as f:

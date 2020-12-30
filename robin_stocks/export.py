@@ -137,7 +137,7 @@ def export_completed_option_orders(dir_path, file_name=None, page_limit=sys.maxs
             'order_type',
             'opening_strategy',
             'closing_strategy',
-            'price',
+            'processed_premium',
             'processed_quantity'
         ])
         for order in all_orders:
@@ -156,7 +156,7 @@ def export_completed_option_orders(dir_path, file_name=None, page_limit=sys.maxs
                         order['type'],
                         order['opening_strategy'],
                         order['closing_strategy'],
-                        order['price'],
+                        order['processed_premium'],
                         order['processed_quantity']
                     ])
         f.close()
@@ -187,7 +187,7 @@ def export_all_option_orders(dir_path, file_name=None, page_limit=sys.maxsize):
             'order_type',
             'opening_strategy',
             'closing_strategy',
-            'price',
+            'processed_premium',
             'processed_quantity'
         ])
         for order in all_orders:
@@ -205,7 +205,7 @@ def export_all_option_orders(dir_path, file_name=None, page_limit=sys.maxsize):
                         order['type'],
                         order['opening_strategy'],
                         order['closing_strategy'],
-                        order['price'],
+                        order['processed_premium'],
                         order['processed_quantity']
                     ])
         f.close()
@@ -240,7 +240,7 @@ def export_option_orders_date_range(dir_path, start_date, end_date, file_name=No
             'order_type',
             'opening_strategy',
             'closing_strategy',
-            'price',
+            'processed_premium',
             'processed_quantity'
         ])
         for order in all_orders:
@@ -262,7 +262,7 @@ def export_option_orders_date_range(dir_path, start_date, end_date, file_name=No
                         order['type'],
                         order['opening_strategy'],
                         order['closing_strategy'],
-                        order['price'],
+                        order['processed_premium'],
                         order['processed_quantity']
                     ])
         f.close()
